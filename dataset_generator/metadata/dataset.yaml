@@ -1,0 +1,27 @@
+contact: klemenjak@ieee.org
+creators:
+- Klemenjak, Christoph
+- Kovatsch, Christoph
+- Herold, Manuel
+- Elmenreich, Wilfried
+dataset_ID: 6
+date_created: '2023-01-23'
+description: an energy consumption dataset created from synthetic power signals
+duration: 3
+geo_location:
+  country: AT
+  latitude: 46.6247222
+  locality: Klagenfurt
+  longitude: 14.3052778
+institution: University of Klagenfurt
+long_name: SynD - A Synthetic Energy Consumption Dataset for Non-Intrusive Load Monitoring
+  in Residential Buildings
+name: SynD
+number_of_buildings: 1
+publication_date: 2019
+related_documents:
+- http://github.com/klemenjak/synd/
+sampling_interval: 1
+schema: https://github.com/nilmtk/nilm_metadata/tree/v0.2
+subject: SynD - A Synthetic Energy Dataset for Load Disaggregation Scholarship
+timezone: Europe/Vienna

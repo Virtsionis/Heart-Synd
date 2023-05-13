@@ -1,0 +1,180 @@
+instance: 1
+original_name: SynD
+elec_meters:
+  1: &HMC8015_mains
+    site_meter: true
+    device_model: HMC8015
+  2: &HMC8015
+    submeter_of: 0
+    device_model: HMC8015
+  3: *HMC8015
+  4: *HMC8015
+  5: *HMC8015
+  6: *HMC8015
+  7: *HMC8015
+  8: *HMC8015
+  9: *HMC8015
+  10: *HMC8015
+  11: *HMC8015
+  12: *HMC8015
+  13: *HMC8015
+  14: *HMC8015
+  15: *HMC8015
+  16: *HMC8015
+  17: *HMC8015
+  18: *HMC8015
+  19: *HMC8015
+  20: *HMC8015
+  21: *HMC8015
+  22: *HMC8015
+
+appliances:
+
+- original_name: fridge
+  room: Kitchen
+  type: fridge
+  description: fridge
+  instance: 1
+  meters: [2]
+
+- original_name: dishwasher
+  room:
+  type: dish washer
+  description: dishwasher
+  instance: 1
+  meters: [3]
+
+- original_name: heater
+  room:
+  type: electric space heater
+  description: electric space heater
+  instance: 1
+  meters: [4]
+
+- original_name: washing machine
+  room:
+  type: washing machine
+  description: washing machine
+  instance: 1
+  meters: [5]
+
+- original_name: toaster
+  room:
+  type: toaster
+  description: toaster
+  instance: 1
+  meters: [6]
+
+- original_name: fan
+  room:
+  type: fan
+  description: fan
+  instance: 1
+  meters: [7]
+
+- original_name: microwave
+  room:
+  type: microwave
+  description: microwave
+  instance: 1
+  meters: [8]
+
+- original_name: iron
+  room:
+  type: clothes iron
+  description: clothes iron
+  instance: 1
+  meters: [9]
+
+- original_name: hot air gun
+  room:
+  type: fan
+  description: hot air gun
+  instance: 2
+  meters: [10]
+
+- original_name: router
+  room:
+  type: broadband router
+  description: router
+  instance: 1
+  meters: [11]
+
+- original_name: coffee machine
+  room:
+  type: coffee maker
+  description: coffee machine
+  instance: 1
+  meters: [12]
+
+- original_name: TV
+  room:
+  type: television
+  description: TV
+  instance: 1
+  meters: [13]
+
+- original_name: printer
+  room:
+  type: printer
+  description: printer
+  instance: 1
+  meters: [14]
+
+- original_name: laptop
+  room:
+  type: laptop computer
+  description: laptop
+  instance: 1
+  meters: [15]
+
+- original_name: lamp
+  room:
+  type: light
+  description: lamp
+  instance: 1
+  meters: [16]
+
+- original_name: Gaming PC
+  room:
+  type: computer
+  description: gaming PC
+  instance: 1
+  meters: [17]
+
+- original_name: radio
+  room:
+  type: unknown
+  description: radio
+  instance: 1
+  meters: [18]
+
+- original_name: monitor
+  room:
+  type: computer monitor
+  description: monitor
+  instance: 1
+  meters: [19]
+
+- original_name: mini oven
+  room:
+  type: electric oven
+  description: minioven
+  instance: 1
+  meters: [20]
+
+- original_name: hair dryer
+  room:
+  type: hair dryer
+  description: hair dryer
+  instance: 1
+  meters: [21]
+
+- original_name: watercooker
+  room:
+  type: kettle
+  description: water kettle
+  instance: 1
+  meters: [22]
+
+construction_year: 2019

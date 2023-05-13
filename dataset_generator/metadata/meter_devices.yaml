@@ -1,0 +1,12 @@
+HMC8015:
+  description: Power analyzer
+  manufacturer: R&S
+  manufacturer_url: https://www.rohde-schwarz.com/us/product/hmc8015-productstartpage_63493-150914.html
+  max_sample_period: 1
+  measurements:
+  - lower_limit: 0
+    physical_quantity: power
+    type: active
+    upper_limit: 96000
+  model: HMC8015 Power analyzer
+  sample_period: 1

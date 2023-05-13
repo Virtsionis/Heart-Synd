@@ -1,0 +1,463 @@
+# import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+from datetime import date
+from dateutil.relativedelta import relativedelta
+import json
+
+############################################################################################################
+
+hour = round(14400 / 24)
+day = 14400
+
+date_format = "%m-%d-%Y"
+today = date.today()
+d3 = today.strftime(date_format)
+
+a = datetime.strptime('07-04-2022', date_format)
+b = datetime.strptime(d3, date_format)
+delta = b - a
+# print(delta.days)
+
+# that's it how to calculate number of days between two given dates
+
+
+appID = {
+    # SMART METER SIGNAL
+    "aggregate": 1,
+
+    # PERIODICAL APPLIANCES
+    "fridge": 2,
+
+    # MULTI PATTERN APPLIANCES
+    "dishwasher": 3,
+    "heater": 4,
+    "washing machine": 5,
+    "toaster": 6,
+    "fan": 7,
+    "microwave": 8,
+    "iron": 9,
+    "hot air gun": 10,
+
+    # ALWAYS ON
+    "router": 11,
+
+    # ON-OFF APPLIANCES
+    "coffee machine": 12,
+    "TV": 13,
+
+    "printer": 14,
+    "laptop": 15,
+    "lamp": 16,
+    "gaming PC": 17,
+
+    # SINGLE PATTERN
+    "radio": 18,
+    "monitor": 19,
+    "minioven": 20,
+    "hair dryer": 21,
+    "watercooker": 22,
+
+    # HEART SINGLE TRACE
+    "ilias data": 23,
+    "WM_Heart": 24,
+    "AC_Heart": 25,
+    "DR_Heart": 26,
+    "DW_Heart": 27,
+    "FR_Heart": 28,
+    "FRCombo_Heart": 29,
+
+    # HEART MULTI TRACES
+    "ac": 30,
+    "dryer": 31,
+    "wm": 32,
+    "dw": 33
+}
+
+# all devices for settings json
+all_appliances = ["fridge", "wm", "dishwasher", "heater", "dryer", "washing machine", "toaster", "dw", "microwave",
+                  "iron",
+                  "hot air gun", "ac", "router", \
+                  "coffee machine", "TV", "printer", "laptop", "lamp", "gaming PC", "radio", "monitor", "minioven", \
+                  "hair dryer", "watercooker", "WM_Heart", "AC_Heart", "DR_Heart", "DW_Heart", "FR_Heart"]
+
+# 6 devices
+standart_noise = ["fridge", "wm", "minioven", "TV", "router", "lamp"]
+
+# 13 devices
+extra_noise = ["heater", "toaster", "microwave", "iron", "hot air gun", "coffee machine", "printer",
+               "laptop", "gaming PC", "radio", "monitor", "hair dryer", "watercooker"]
+
+# Heron devices with smartplugs
+heron = ["ac", "dw", "wm", "dryer", "TV", "gaming PC"]
+
+H1 = ["ac", "dw", "fridge", "wm", "minioven", "TV", "router", "lamp", "heater", "toaster", "microwave", "iron"]
+H2 = ["wm", "TV", "fridge", "watercooker", "minioven", "toaster", "router", "lamp", "iron", "hot air gun",
+      "coffee machine", "printer"]
+H3 = ["wm", "ac", "fridge", "hair dryer", "minioven", "TV", "router", "lamp", "laptop", "gaming PC", "radio", "monitor"]
+H4 = ["ac", "wm", "fridge", "dryer", "minioven", "TV", "router", "lamp", "gaming PC", "radio", "monitor", "hair dryer"]
+H5 = ["dw", "wm", "fridge", "monitor", "minioven", "TV", "router", "lamp", "heater", "toaster", "watercooker", "iron"]
+H6 = ["ac", "wm", "fridge", "dw", "minioven", "TV", "router", "lamp", "hot air gun", "coffee machine", "printer",
+      "laptop"]
+H7 = ["dw", "wm", "fridge", "gaming PC", "minioven", "TV", "router", "lamp", "laptop", "watercooker", "radio",
+      "monitor"]
+H8 = ["TV", "dw", "fridge", "wm", "minioven", "microwave", "router", "lamp", "radio", "monitor", "hair dryer",
+      "watercooker"]
+H9 = ["ac", "TV", "fridge", "wm", "minioven", "microwave", "router", "lamp", "radio", "monitor", "hair dryer",
+      "watercooker"]
+H10 = ["ac", "wm", "fridge", "dryer", "minioven", "TV", "router", "lamp", "microwave", "iron", "hot air gun",
+       "coffee machine"]
+H11 = ["ac", "wm", "fridge", "dryer", "minioven", "TV", "router", "lamp", "gaming PC", "radio", "monitor", "hair dryer"]
+H12 = ["ac", "wm", "fridge", "radio", "minioven", "TV", "router", "lamp", "toaster", "microwave", "iron", "hot air gun"]
+H13 = ["TV", "wm", "fridge", "microwave", "minioven", "toaster", "router", "lamp", "iron", "hot air gun",
+       "coffee machine", "printer"]
+H14 = ["ac", "dw", "fridge", "wm", "minioven", "TV", "router", "lamp", "heater", "toaster", "microwave", "iron"]
+H15 = ["ac", "ac.1", "fridge", "wm", "minioven", "TV", "router", "lamp", "radio", "monitor", "iron", "hot air gun"]
+H38 = ["ac", "dryer", "fridge", "wm", "minioven", "TV", "router", "lamp", "laptop", "gaming PC", "coffee machine",
+       "printer"]
+H29 = ["gaming PC", "dw", "fridge", "wm", "minioven", "TV", "router", "lamp", "heater", "toaster", "microwave", "iron"]
+H27 = ["wm", "TV", "fridge", "radio", "minioven", "dryer", "router", "lamp", "microwave", "iron", "hot air gun",
+       "coffee machine"]
+H33 = ["wm", "dw", "fridge", "iron", "minioven", "TV", "router", "lamp", "monitor", "hair dryer", "watercooker",
+       "heater"]
+H31 = ["dryer", "TV", "fridge", "wm", "minioven", "monitor", "router", "lamp", "heater", "toaster", "microwave",
+       "watercooker"]
+H26 = ["dryer", "TV", "fridge", "wm", "minioven", "toaster", "router", "lamp", "radio", "monitor", "hair dryer",
+       "watercooker"]
+H30 = ["ac", "ac.1", "fridge", "wm", "minioven", "TV", "router", "lamp", "microwave", "iron", "hot air gun",
+       "coffee machine"]
+H39 = ["wm", "ac", "fridge", "iron", "minioven", "TV", "router", "lamp", "laptop", "gaming PC", "radio", "monitor"]
+H37 = ["dw", "wm", "fridge", "iron", "minioven", "TV", "router", "lamp", "radio", "monitor", "hair dryer",
+       "watercooker"]
+H28 = ["wm", "ac", "fridge", "iron", "minioven", "TV", "router", "lamp", "gaming PC", "radio", "monitor", "hair dryer"]
+H22 = ["ac", "wm", "fridge", "iron", "minioven", "TV", "router", "lamp", "hair dryer", "radio", "hot air gun",
+       "hair dryer"]
+H21 = ["ac", "wm", "fridge", "dryer", "minioven", "TV", "router", "lamp", "microwave", "iron", "hot air gun",
+       "coffee machine"]
+H19 = ["ac", "ac.1", "fridge", "wm", "minioven", "TV", "router", "lamp", "laptop", "gaming PC", "iron", "hot air gun"]
+H18 = ["ac", "ac.1", "fridge", "wm", "minioven", "TV", "router", "lamp", "hot air gun", "coffee machine", "hair dryer",
+       "watercooker"]
+H16 = ["ac", "dw", "fridge", "iron", "minioven", "TV", "router", "lamp", "radio", "monitor", "hair dryer",
+       "watercooker"]
+H23 = ["ac", "wm", "fridge", "dryer", "minioven", "TV", "router", "lamp", "heater", "toaster", "microwave", "iron"]
+
+
+# load settings json
+def load_settings(settings_file='settings.json'):
+    with open(settings_file) as s_f:
+        return json.load(s_f)
+
+
+settings = load_settings('settings.json')
+appliances = settings['appliances']
+ID = settings['ID']
+days_settings_json = settings['nr_days']
+
+if len(appliances) == 8:
+
+    df1 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        sep='\t')
+    df1.columns = ['Datetime', 'power']
+    df2 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[1]]}.csv',
+        sep='\t')
+    df2.columns = ['Datetime', 'power']
+    df3 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[2]]}.csv',
+        sep='\t')
+    df3.columns = ['Datetime', 'power']
+    df4 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[3]]}.csv',
+        sep='\t')
+    df4.columns = ['Datetime', 'power']
+    df5 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[4]]}.csv',
+        sep='\t')
+    df5.columns = ['Datetime', 'power']
+    df6 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[5]]}.csv',
+        sep='\t')
+    df6.columns = ['Datetime', 'power']
+    df7 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[6]]}.csv',
+        sep='\t')
+    df7.columns = ['Datetime', 'power']
+    df8 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[7]]}.csv',
+        sep='\t')
+    df8.columns = ['Datetime', 'power']
+
+    df1_time = df1['Datetime']
+    df1_mains = df1['power'] + df2['power'] + df3['power'] + df4['power'] + df5['power'] + df6['power'] \
+                + df7['power'] + df8['power']
+    # temp = pd.concat([df1_time, df1_mains], axis=1)
+    HERON1 = pd.concat(
+        [df1_time, df1_mains, df1['power'], df2['power'], df3['power'], df4['power'], df5['power'], df6['power'],
+         df7['power'], df8['power']], axis=1)
+    HERON1.columns = ['Datetime', 'mains', f"{appliances[0]}", f"{appliances[1]}", f"{appliances[2]}",
+                      f"{appliances[3]}",
+                      f"{appliances[4]}", f"{appliances[5]}", f"{appliances[6]}", f"{appliances[7]}"]
+
+    # timestamp convertion
+    timestamps = HERON1['Datetime'].tolist()
+    # str to datetime oneliner
+    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+                                   timestamps]
+    HERON1['Datetime'] = list_of_converted_datetimes
+    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
+
+    ##############################
+    # Heron visualization 15 days
+
+    hour = round(14400 / 24)
+    day = 14400
+
+    # visualizations
+    labels = ['00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00', '00:00']
+
+    # house 1
+    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
+    print(HERON1.head(5))
+    print(HERON1.tail(5))
+
+
+elif len(appliances) == 1:
+    df1 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        sep='\t')
+    df1.columns = ['Datetime', 'power']
+    df1_time = df1['Datetime']
+    df1_mains = df1['power']
+
+    HERON1 = pd.concat(
+        [df1_time, df1_mains, df1['power']], axis=1)
+    HERON1.columns = ['Datetime', 'mains', f"{appliances[0]}"]
+
+    # timestamp convertion
+    timestamps = HERON1['Datetime'].tolist()
+    # str to datetime oneliner
+    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+                                   timestamps]
+    HERON1['Datetime'] = list_of_converted_datetimes
+    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
+
+    ##############################
+    # Heron visualization 15 days
+
+    hour = round(14400 / 24)
+    day = 14400
+
+    # visualizations
+    labels = ['00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00', '00:00']
+
+    # house 1
+    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
+    print(HERON1.head(5))
+    print(HERON1.tail(5))
+
+
+
+
+
+
+elif len(appliances) == 10:
+
+    df1 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        sep='\t')
+    df1.columns = ['Datetime', 'power']
+    df2 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[1]]}.csv',
+        sep='\t')
+    df2.columns = ['Datetime', 'power']
+    df3 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[2]]}.csv',
+        sep='\t')
+    df3.columns = ['Datetime', 'power']
+    df4 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[3]]}.csv',
+        sep='\t')
+    df4.columns = ['Datetime', 'power']
+    df5 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[4]]}.csv',
+        sep='\t')
+    df5.columns = ['Datetime', 'power']
+    df6 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[5]]}.csv',
+        sep='\t')
+    df6.columns = ['Datetime', 'power']
+    df7 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[6]]}.csv',
+        sep='\t')
+    df7.columns = ['Datetime', 'power']
+    df8 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[7]]}.csv',
+        sep='\t')
+    df8.columns = ['Datetime', 'power']
+    df9 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[8]]}.csv',
+        sep='\t')
+    df9.columns = ['Datetime', 'power']
+    df10 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[9]]}.csv',
+        sep='\t')
+    df10.columns = ['Datetime', 'power']
+
+    df1_time = df1['Datetime']
+    df1_mains = df1['power'] + df2['power'] + df3['power'] + df4['power'] + df5['power'] + df6['power'] \
+                + df7['power'] + df8['power'] + df9['power'] + df10['power']
+    # temp = pd.concat([df1_time, df1_mains], axis=1)
+    HERON1 = pd.concat(
+        [df1_time, df1_mains, df1['power'], df2['power'], df3['power'], df4['power'], df5['power'], df6['power'],
+         df7['power'], df8['power'], df9['power'], df10['power']], axis=1)
+    HERON1.columns = ['Datetime', 'mains', f"{appliances[0]}", f"{appliances[1]}", f"{appliances[2]}",
+                      f"{appliances[3]}",
+                      f"{appliances[4]}", f"{appliances[5]}", f"{appliances[6]}", f"{appliances[7]}",
+                      f"{appliances[8]}", f"{appliances[9]}"]
+
+    # timestamp convertion
+    timestamps = HERON1['Datetime'].tolist()
+    # str to datetime oneliner
+    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+                                   timestamps]
+    HERON1['Datetime'] = list_of_converted_datetimes
+    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
+
+    ##############################
+    # Heron visualization 15 days
+
+    hour = round(14400 / 24)
+    day = 14400
+
+    # visualizations
+    labels = ['00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00',
+              '00:00', '08:00', '16:00', '00:00']
+
+    # house 1
+    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
+    print(HERON1.head(5))
+    print(HERON1.tail(5))
+
+else:
+
+    df1 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        sep='\t')
+    df1.columns = ['Datetime', 'power']
+    df2 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[1]]}.csv',
+        sep='\t')
+    df2.columns = ['Datetime', 'power']
+    df3 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[2]]}.csv',
+        sep='\t')
+    df3.columns = ['Datetime', 'power']
+    df4 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[3]]}.csv',
+        sep='\t')
+    df4.columns = ['Datetime', 'power']
+    df5 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[4]]}.csv',
+        sep='\t')
+    df5.columns = ['Datetime', 'power']
+    df6 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[5]]}.csv',
+        sep='\t')
+    df6.columns = ['Datetime', 'power']
+    df7 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[6]]}.csv',
+        sep='\t')
+    df7.columns = ['Datetime', 'power']
+    df8 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[7]]}.csv',
+        sep='\t')
+    df8.columns = ['Datetime', 'power']
+    df9 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[8]]}.csv',
+        sep='\t')
+    df9.columns = ['Datetime', 'power']
+    df10 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[9]]}.csv',
+        sep='\t')
+    df10.columns = ['Datetime', 'power']
+    df11 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[10]]}.csv',
+        sep='\t')
+    df11.columns = ['Datetime', 'power']
+    df12 = pd.read_csv(
+        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[11]]}.csv',
+        sep='\t')
+    df12.columns = ['Datetime', 'power']
+
+    df1_time = df1['Datetime']
+    df1_mains = df1['power'] + df2['power'] + df3['power'] + df4['power'] + df5['power'] + df6['power'] + df7['power'] + \
+                df8['power'] \
+                + df9['power'] + df10['power'] + df11['power'] + df12['power']
+    # temp = pd.concat([df1_time, df1_mains], axis=1)
+    HERON1 = pd.concat(
+        [df1_time, df1_mains, df1['power'], df2['power'], df3['power'], df4['power'], df5['power'], df6['power'],
+         df7['power'], df8['power'], df9['power'], df10['power'], df11['power'], df12['power']], axis=1)
+    HERON1.columns = ['Datetime', 'mains', f"{appliances[0]}", f"{appliances[1]}", f"{appliances[2]}",
+                      f"{appliances[3]}", f"{appliances[4]}",
+                      f"{appliances[5]}", f"{appliances[6]}", f"{appliances[7]}", f"{appliances[8]}",
+                      f"{appliances[9]}", f"{appliances[10]}", f"{appliances[11]}"]
+
+    # timestamp convertion
+    timestamps = HERON1['Datetime'].tolist()
+    # str to datetime oneliner
+    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+                                   timestamps]
+    HERON1['Datetime'] = list_of_converted_datetimes
+    # HERON1 = HERON1.iloc[3*day-1:]
+    # HERON1 = HERON1.reset_index(drop=True)
+
+    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
+
+    # house 1
+    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
+    print(HERON1.head(5))
+    print(HERON1.tail(5))
