@@ -13,16 +13,14 @@
 In order install and to use Heart-Synd we recommend the use of a Anaconda. The provided Heart-SynD.yml file contains the necessary dependencies. With the following command the appropriate environment is created: 
 
 Install the depedencies:
-
-'''
+```
 conda env create -f Heart-SynD.yml
-'''
+```
 
 Activate the environment:
-
-'''
+```
 conda activate Heart-SynD
-'''
+```
 
 ## Usage
 
