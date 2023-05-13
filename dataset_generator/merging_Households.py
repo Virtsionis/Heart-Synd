@@ -158,35 +158,35 @@ days_settings_json = settings['nr_days']
 if len(appliances) == 8:
 
     df1 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        f'target/{ID}/{appID[appliances[0]]}.csv',
         sep='\t')
     df1.columns = ['Datetime', 'power']
     df2 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[1]]}.csv',
+        f'target/{ID}/{appID[appliances[1]]}.csv',
         sep='\t')
     df2.columns = ['Datetime', 'power']
     df3 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[2]]}.csv',
+        f'target/{ID}/{appID[appliances[2]]}.csv',
         sep='\t')
     df3.columns = ['Datetime', 'power']
     df4 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[3]]}.csv',
+        f'target/{ID}/{appID[appliances[3]]}.csv',
         sep='\t')
     df4.columns = ['Datetime', 'power']
     df5 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[4]]}.csv',
+        f'target/{ID}/{appID[appliances[4]]}.csv',
         sep='\t')
     df5.columns = ['Datetime', 'power']
     df6 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[5]]}.csv',
+        f'target/{ID}/{appID[appliances[5]]}.csv',
         sep='\t')
     df6.columns = ['Datetime', 'power']
     df7 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[6]]}.csv',
+        f'target/{ID}/{appID[appliances[6]]}.csv',
         sep='\t')
     df7.columns = ['Datetime', 'power']
     df8 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[7]]}.csv',
+        f'target/{ID}/{appID[appliances[7]]}.csv',
         sep='\t')
     df8.columns = ['Datetime', 'power']
 
@@ -207,40 +207,11 @@ if len(appliances) == 8:
     list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
                                    timestamps]
     HERON1['Datetime'] = list_of_converted_datetimes
-    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
-
-    ##############################
-    # Heron visualization 15 days
-
-    hour = round(14400 / 24)
-    day = 14400
-
-    # visualizations
-    labels = ['00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00', '00:00']
-
-    # house 1
-    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
-    print(HERON1.head(5))
-    print(HERON1.tail(5))
-
+    HERON1.to_csv(f'target/{ID}/HERON{ID}.csv', index=False)
 
 elif len(appliances) == 1:
     df1 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        f'target/{ID}/{appID[appliances[0]]}.csv',
         sep='\t')
     df1.columns = ['Datetime', 'power']
     df1_time = df1['Datetime']
@@ -256,81 +227,48 @@ elif len(appliances) == 1:
     list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
                                    timestamps]
     HERON1['Datetime'] = list_of_converted_datetimes
-    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
-
-    ##############################
-    # Heron visualization 15 days
-
-    hour = round(14400 / 24)
-    day = 14400
-
-    # visualizations
-    labels = ['00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00', '00:00']
-
-    # house 1
-    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
-    print(HERON1.head(5))
-    print(HERON1.tail(5))
-
-
-
-
-
+    HERON1.to_csv(f'target/{ID}/HERON{ID}.csv', index=False)
 
 elif len(appliances) == 10:
 
     df1 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        f'target/{ID}/{appID[appliances[0]]}.csv',
         sep='\t')
     df1.columns = ['Datetime', 'power']
     df2 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[1]]}.csv',
+        f'target/{ID}/{appID[appliances[1]]}.csv',
         sep='\t')
     df2.columns = ['Datetime', 'power']
     df3 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[2]]}.csv',
+        f'target/{ID}/{appID[appliances[2]]}.csv',
         sep='\t')
     df3.columns = ['Datetime', 'power']
     df4 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[3]]}.csv',
+        f'target/{ID}/{appID[appliances[3]]}.csv',
         sep='\t')
     df4.columns = ['Datetime', 'power']
     df5 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[4]]}.csv',
+        f'target/{ID}/{appID[appliances[4]]}.csv',
         sep='\t')
     df5.columns = ['Datetime', 'power']
     df6 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[5]]}.csv',
+        f'target/{ID}/{appID[appliances[5]]}.csv',
         sep='\t')
     df6.columns = ['Datetime', 'power']
     df7 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[6]]}.csv',
+        f'target/{ID}/{appID[appliances[6]]}.csv',
         sep='\t')
     df7.columns = ['Datetime', 'power']
     df8 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[7]]}.csv',
+        f'target/{ID}/{appID[appliances[7]]}.csv',
         sep='\t')
     df8.columns = ['Datetime', 'power']
     df9 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[8]]}.csv',
+        f'target/{ID}/{appID[appliances[8]]}.csv',
         sep='\t')
     df9.columns = ['Datetime', 'power']
     df10 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[9]]}.csv',
+        f'target/{ID}/{appID[appliances[9]]}.csv',
         sep='\t')
     df10.columns = ['Datetime', 'power']
 
@@ -352,84 +290,57 @@ elif len(appliances) == 10:
     list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
                                    timestamps]
     HERON1['Datetime'] = list_of_converted_datetimes
-    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
 
-    ##############################
-    # Heron visualization 15 days
 
-    hour = round(14400 / 24)
-    day = 14400
-
-    # visualizations
-    labels = ['00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00',
-              '00:00', '08:00', '16:00', '00:00']
-
-    # house 1
-    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
-    print(HERON1.head(5))
-    print(HERON1.tail(5))
 
 else:
 
     df1 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[0]]}.csv',
+        f'target/{ID}/{appID[appliances[0]]}.csv',
         sep='\t')
     df1.columns = ['Datetime', 'power']
     df2 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[1]]}.csv',
+        f'target/{ID}/{appID[appliances[1]]}.csv',
         sep='\t')
     df2.columns = ['Datetime', 'power']
     df3 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[2]]}.csv',
+        f'target/{ID}/{appID[appliances[2]]}.csv',
         sep='\t')
     df3.columns = ['Datetime', 'power']
     df4 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[3]]}.csv',
+        f'target/{ID}/{appID[appliances[3]]}.csv',
         sep='\t')
     df4.columns = ['Datetime', 'power']
     df5 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[4]]}.csv',
+        f'target/{ID}/{appID[appliances[4]]}.csv',
         sep='\t')
     df5.columns = ['Datetime', 'power']
     df6 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[5]]}.csv',
+        f'target/{ID}/{appID[appliances[5]]}.csv',
         sep='\t')
     df6.columns = ['Datetime', 'power']
     df7 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[6]]}.csv',
+        f'target/{ID}/{appID[appliances[6]]}.csv',
         sep='\t')
     df7.columns = ['Datetime', 'power']
     df8 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[7]]}.csv',
+        f'target/{ID}/{appID[appliances[7]]}.csv',
         sep='\t')
     df8.columns = ['Datetime', 'power']
     df9 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[8]]}.csv',
+        f'target/{ID}/{appID[appliances[8]]}.csv',
         sep='\t')
     df9.columns = ['Datetime', 'power']
     df10 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[9]]}.csv',
+        f'target/{ID}/{appID[appliances[9]]}.csv',
         sep='\t')
     df10.columns = ['Datetime', 'power']
     df11 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[10]]}.csv',
+        f'target/{ID}/{appID[appliances[10]]}.csv',
         sep='\t')
     df11.columns = ['Datetime', 'power']
     df12 = pd.read_csv(
-        f'/home/nikolaos/Desktop/Heart/SynD_alternated/dataset_generator/target/{ID}/{appID[appliances[11]]}.csv',
+        f'target/{ID}/{appID[appliances[11]]}.csv',
         sep='\t')
     df12.columns = ['Datetime', 'power']
 
@@ -452,12 +363,6 @@ else:
     list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
                                    timestamps]
     HERON1['Datetime'] = list_of_converted_datetimes
-    # HERON1 = HERON1.iloc[3*day-1:]
-    # HERON1 = HERON1.reset_index(drop=True)
 
-    HERON1.to_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv', index=False)
+    HERON1.to_csv(f'target/{ID}/HERON{ID}.csv', index=False)
 
-    # house 1
-    dft1 = pd.read_csv(f'/home/nikolaos/Desktop/Heart/Heart_data/SynD_Heron/HERON{ID}.csv')
-    print(HERON1.head(5))
-    print(HERON1.tail(5))

@@ -421,8 +421,8 @@ if __name__ == '__main__':
         pass
 
 
-    # with open("merging_Households.py") as f:
-    #     exec(f.read())
+    with open("merging_Households.py") as f:
+        exec(f.read())
 
     exit()
 
