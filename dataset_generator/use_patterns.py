@@ -279,7 +279,7 @@ def WM_Heart_use():
 
 def wm_use(x):
 
-    r = np.random.randint(0, 10)
+    r = np.random.randint(0, 2)
     filename = names.wm_use(r)
     root_dir = 'data/wm/'
     data, n_rows = csv_r.csv_read(filename, root_dir)
@@ -298,7 +298,7 @@ def AC_Heart_use():
     return data, n_rows
 
 def ac_use(x):
-    r = np.random.randint(0, 8)
+    r = np.random.randint(0, 9)
     filename = names.ac_use(r)
     root_dir = 'data/ac/'
     data, n_rows = csv_r.csv_read(filename, root_dir)

@@ -75,30 +75,25 @@ def microwave_use(var):
     return filename
 
 def WM_Heart_use():
-    filename = "WM_almost_nopulse_9574384527220936133.csv"
+    filename = "WM_ovenlike_double_9574384527220934871.csv"
+    # filename = "WM_double_fat_9574384527220934178.csv"
     return filename
 
 def wm_use(var):
+
+    # not used traces
+    # filename = 'WM_almost_nopulse_9574384527220936133.csv'
+    # filename = "WM_high_thin_low_fat_double_9574384527220934178.csv"
+    # filename = 'WM_ovenlike_double_9574384527220934871.csv'
+    # filename = 'WM_ovenlike_double_9574384527220934049.csv'
+    # filename = 'WM_nopulse_9574384527220934049.csv'
+    # filename = 'WM_double_thin_9574384527220934178.csv'
+    # filename = "WM_double_thin_9574384527220934786.csv"
+    # used traces
     if var == 0:
         filename = 'WM_double_fat_9574384527220934178.csv'
-    elif var == 1:
-        filename = 'WM_almost_nopulse_9574384527220936133.csv'
-    elif var == 2:
-        filename = 'WM_double_thin_9574384527220934178.csv'
-    elif var == 3:
-        filename = 'WM_typical_9574384527220934070.csv'
-    elif var == 4:
-        filename = 'WM_thin_9574384527220934786.csv'
-    elif var == 5:
-        filename = 'WM_ovenlike_double_9574384527220934871.csv'
-    elif var == 6:
-        filename = 'WM_ovenlike_double_9574384527220934049.csv'
-    elif var == 7:
-        filename = 'WM_nopulse_9574384527220934049.csv'
-    elif var == 8:
-        filename = 'WM_high_thin_low_fat_double_9574384527220934178.csv'
     else:
-        filename = 'WM_double_thin_9574384527220934786.csv'
+        filename = 'WM_ovenlike_double_9574384527220934871.csv'
     return filename
 
 def DR_Heart_use():
@@ -152,7 +147,7 @@ def ac_use(var):
     elif var == 2:
         filename = 'AC_long_9574384527220936265.csv'
     elif var == 3:
-        filename = 'AC_long_high_9574384527220934984.csv'
+        filename = 'AC_long_high_9574384527220934215.csv'
     elif var == 4:
         filename = 'AC_long_high_9574384527220941039.csv'
     elif var == 5:
