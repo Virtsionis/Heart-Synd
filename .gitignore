@@ -75,6 +75,9 @@ figures/*
 #Datasets
 datasets/*
 
+#metadata
+metadata/*
+
 #Pycharm
 .DS_Store
 .idea

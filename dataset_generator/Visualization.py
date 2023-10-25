@@ -45,8 +45,8 @@ labels = ['00:00', '08:00', '16:00',
 # read house
 # C:\Users\nick_giouzelis\Desktop\PycharmProjects\Synd\dataset_generator\target\13
 filepath = 'target/13/HERON13.csv'
-dft1 = pd.read_csv(filepath, sep='\t')
-print(dft1.head())
+df = pd.read_csv(filepath, sep='\t')
+print(df.head())
 
 
 # # 30 Days slicing
