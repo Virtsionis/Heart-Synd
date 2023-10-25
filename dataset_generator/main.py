@@ -11,6 +11,7 @@ import json
 import os
 import pandas as pd
 import shutil
+import time
 
 samples_per_day = 864000
 log_file = 'synd_log.txt'
@@ -378,6 +379,8 @@ def _generate(settings_dict, basedir='target'):
 
 if __name__ == '__main__':
 
+    # Record the start time
+    start_time = time.time()
     # #ignore warning
     # import warnings
     # warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -424,6 +427,12 @@ if __name__ == '__main__':
     with open("merging_Households.py") as f:
         exec(f.read())
 
+    # Record the end time
+    end_time = time.time()
+
+    # Calculate the execution time
+    execution_time = end_time - start_time
+    print(f"Execution time: {execution_time} seconds")
     exit()
 
 '''

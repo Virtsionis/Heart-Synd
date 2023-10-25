@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import os
 
+
 def unix_to_date(date, date_format='%Y-%m-%d %H:%M:%S'):
     '''
     converts unix timestamp to normal UTC date time
@@ -111,7 +112,6 @@ def csv_read(filename, root_dir):
         X = pd.read_csv(filepath.format(1), sep=',', header=None, index_col=None, usecols=[2], skiprows=8, nrows=n_rows, doublequote=True, dtype=None)
     X.fillna(value=None, method='ffill')
 
-    #fix bug here
     X.clip(lower=0)
     data[:,:] = X.values
 
