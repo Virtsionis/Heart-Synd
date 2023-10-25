@@ -1,2 +1,2 @@
-{"appliances":["wm", "dw", "ac", "dryer", "fridge", "iron", "minioven", "TV", "router", "lamp", "monitor", "hair dryer","watercooker", "heater", "coffee machine"],
+{"appliances":["wm", "dw", "ac", "dryer", "fridge", "iron", "minioven", "TV", "router", "lamp", "monitor", "hair dryer"],
   "nr_days":32, "sampling_interval":3600 , "add_noise:": true, "output_format":  "CSV", "ID":1, "SEED":78}
