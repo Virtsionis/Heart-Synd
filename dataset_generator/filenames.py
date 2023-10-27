@@ -100,6 +100,7 @@ def DR_Heart_use():
     filename = "DR_hp_low_9574384527220934070.csv"
     return filename
 
+
 def dryer_use(var):
     if var == 0:
         filename = 'DR_hp_double_9574384527220936009.csv'
@@ -109,9 +110,11 @@ def dryer_use(var):
         filename = 'DR_hp_low_9574384527220934070.csv'
     return filename
 
+
 def DW_Heart_use():
     filename = "DW_two_pulse_9574384527220936014.csv"
     return filename
+
 
 def dw_use(var):
     if var == 0:
@@ -126,9 +129,11 @@ def dw_use(var):
         filename = 'DW_two_pulse_9574384527220936014.csv'
     return filename
 
+
 def FR_Heart_use():
     filename = "FR_simple_1.csv"
     return filename
+
 
 def FRCombo_Heart_use():
     filename = "IDD_AC_WM_final_stage.csv"

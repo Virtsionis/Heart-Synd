@@ -42,52 +42,43 @@ labels = ['00:00', '08:00', '16:00',
           '00:00', '08:00', '16:00',
           '00:00', '08:00', '16:00', '00:00']
 
-# csv reader
+# Read the CSV file
 filepath = 'target/1/HERON1.csv'
 df = pd.read_csv(filepath, sep=',')
-print(df.shape)
-print(df.columns)
-print(df.head(5))
-print(df.tail(5))
 
+# Calculate the sum of the 'main' column
+main_column_sum = df['mains'].sum()
+print(f"kwh per day: {main_column_sum:.3f}")
 
-# 30 Days slicing
-# n = round(day*31)
-n = 24*31
-df = df.iloc[:n]
-print(df.tail(5))
-#
-# mains
-df.iloc[:, 1].plot()
+# Set the figure size
+plt.figure(figsize=(12, 6))
 
-# device of interest - wm
-df.iloc[:, 2].plot()
+# Plot the mains data
+df.iloc[:, 1].plot(label="mains")
 
-# device of interest -  dw
-df.iloc[:, 3].plot()
-#
-# device of interest -  ac
-df.iloc[:, 4].plot()
-#
-# device of interest -  dryer
-df.iloc[:, 5].plot()
-#
-# device of interest -  fridge
-df.iloc[:, 6].plot()
-#
-# device of interest -  iron
-df.iloc[:, 7].plot()
+# # Plot the other devices of interest
+# device_columns = [2, 3, 4, 5, 6, 7, 10]
+# device_labels = ["wm", "dw", "ac", "dryer", "fridge", "iron", "router"]
 
-# device of interest -  router
-df.iloc[:, 10].plot()
+# for i, col in enumerate(device_columns):
+#     df.iloc[:, col].plot(label=device_labels[i])
 
-labels = df.iloc[np.linspace(0, df.shape[0]-1, num=len(labels)), 0]
-plt.xticks(ticks=np.linspace(0, df.shape[0]-1, num=len(labels)), labels=labels, rotation=90, fontsize=4.5)
-# plt.legend(['mains', 'wm'], loc='best')
-plt.legend(["mains", "wm", "dw", "ac", "dryer", "fridge", "iron", "router"], loc='best')
-plt.title('SynD_all_appliances 30 Days')
-plt.savefig('figures/SynD_all_appliances_30_days.pdf', format='pdf', bbox_inches='tight')
-plt.savefig('figures/SynD_all_appliances_30_days.png', format='png', dpi=300, bbox_inches='tight')
+# Set x-ticks for each hour of the day
+num_hours = 24
+tick_positions = range(0, df.shape[0], int(df.shape[0] / num_hours))
+tick_labels = [f"{hour:02}:00" for hour in range(num_hours)]
+
+plt.xticks(tick_positions, tick_labels, rotation=90)
+
+# Set labels, legend, and title
+plt.legend(loc='best')
+plt.title('1 Day of SynD')
+plt.ylabel("kwh")
+plt.xlabel("Hours (h)")
+
+# # Save and show the plot
+# plt.savefig('figures/1 Day of SynD.pdf', format='pdf', bbox_inches='tight')
+# plt.savefig('figures/1 Day of SynD.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
 

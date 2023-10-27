@@ -291,7 +291,7 @@ elif len(appliances) == 10:
 
 
 
-else:
+elif len(appliances) == 12:
 
     df1 = pd.read_csv(
         f'target/{ID}/{appID[appliances[0]]}.csv',
@@ -361,6 +361,137 @@ else:
     list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
                                    timestamps]
     HERON1['Datetime'] = list_of_converted_datetimes
-
     HERON1.to_csv(f'target/{ID}/HERON{ID}.csv', index=False)
+
+# all appliances
+else:
+    df1 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[0]]}.csv',
+        sep='\t')
+    df1.columns = ['Datetime', 'power']
+    df2 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[1]]}.csv',
+        sep='\t')
+    df2.columns = ['Datetime', 'power']
+    df3 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[2]]}.csv',
+        sep='\t')
+    df3.columns = ['Datetime', 'power']
+    df4 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[3]]}.csv',
+        sep='\t')
+    df4.columns = ['Datetime', 'power']
+    df5 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[4]]}.csv',
+        sep='\t')
+    df5.columns = ['Datetime', 'power']
+    df6 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[5]]}.csv',
+        sep='\t')
+    df6.columns = ['Datetime', 'power']
+    df7 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[6]]}.csv',
+        sep='\t')
+    df7.columns = ['Datetime', 'power']
+    df8 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[7]]}.csv',
+        sep='\t')
+    df8.columns = ['Datetime', 'power']
+    df9 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[8]]}.csv',
+        sep='\t')
+    df9.columns = ['Datetime', 'power']
+    df10 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[9]]}.csv',
+        sep='\t')
+    df10.columns = ['Datetime', 'power']
+    df11 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[10]]}.csv',
+        sep='\t')
+    df11.columns = ['Datetime', 'power']
+    df12 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[11]]}.csv',
+        sep='\t')
+    df12.columns = ['Datetime', 'power']
+    df13 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[12]]}.csv',
+        sep='\t')
+    df13.columns = ['Datetime', 'power']
+    df14 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[13]]}.csv',
+        sep='\t')
+    df14.columns = ['Datetime', 'power']
+    df15 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[14]]}.csv',
+        sep='\t')
+    df15.columns = ['Datetime', 'power']
+    df16 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[15]]}.csv',
+        sep='\t')
+    df16.columns = ['Datetime', 'power']
+    df17 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[16]]}.csv',
+        sep='\t')
+    df17.columns = ['Datetime', 'power']
+    df18 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[17]]}.csv',
+        sep='\t')
+    df18.columns = ['Datetime', 'power']
+    df19 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[18]]}.csv',
+        sep='\t')
+    df19.columns = ['Datetime', 'power']
+    df20 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[19]]}.csv',
+        sep='\t')
+    df20.columns = ['Datetime', 'power']
+    df21 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[20]]}.csv',
+        sep='\t')
+    df21.columns = ['Datetime', 'power']
+    df22 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[21]]}.csv',
+        sep='\t')
+    df22.columns = ['Datetime', 'power']
+    df23 = pd.read_csv(
+        f'target/{ID}/{appID[appliances[22]]}.csv',
+        sep='\t')
+    df23.columns = ['Datetime', 'power']
+
+    df1_time = df1['Datetime']
+    df1_mains = df1['power'] + df2['power'] + df3['power'] + df4['power'] + \
+                df5['power'] + df6['power'] + df7['power'] + df8['power'] \
+                + df9['power'] + df10['power'] + df11['power'] + df12['power'] \
+                + df13['power'] + df14['power'] + df15['power'] + df16['power'] \
+                + df17['power'] + df18['power'] + df19['power'] + df20['power']  \
+                + df21['power'] + df22['power'] + df23['power']
+        # temp = pd.concat([df1_time, df1_mains], axis=1)
+    HERON1 = pd.concat(
+        [df1_time, df1_mains, df1['power'], df2['power'], df3['power'], df4['power'], df5['power'], df6['power'],
+         df7['power'], df8['power'], df9['power'], df10['power'], df11['power'], df12['power'],
+         df13['power'], df14['power'], df15['power'], df16['power'], df17['power'], df18['power'],
+         df19['power'], df20['power'], df21['power'], df22['power'], df23['power']], axis=1)
+    HERON1.columns = ['Datetime', 'mains', f"{appliances[0]}", f"{appliances[1]}", f"{appliances[2]}",
+                      f"{appliances[3]}", f"{appliances[4]}",
+                      f"{appliances[5]}", f"{appliances[6]}", f"{appliances[7]}", f"{appliances[8]}",
+                      f"{appliances[9]}", f"{appliances[10]}", f"{appliances[11]}",
+                      f"{appliances[12]}", f"{appliances[13]}", f"{appliances[14]}",
+                      f"{appliances[15]}", f"{appliances[16]}",
+                      f"{appliances[17]}", f"{appliances[18]}", f"{appliances[19]}", f"{appliances[20]}",
+                      f"{appliances[21]}", f"{appliances[22]}"]
+
+    # timestamp convertion
+    timestamps = HERON1['Datetime'].tolist()
+    # str to datetime oneliner
+    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+                                   timestamps]
+    HERON1['Datetime'] = list_of_converted_datetimes
+    # # upsamping
+    HERON1['Datetime'] = pd.to_datetime(HERON1['Datetime'])
+    HERON1.iloc[:, 1:] = HERON1.iloc[:, 1:].div(1000 * 3600)
+    HERON1.set_index('Datetime', inplace=True)
+    hourly_df = HERON1.resample('1H').sum()
+    hourly_df.reset_index(inplace=True)
+    hourly_df.to_csv(f'target/{ID}/HERON{ID}.csv', index=False)
+
 
