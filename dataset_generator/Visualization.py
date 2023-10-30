@@ -42,9 +42,90 @@ labels = ['00:00', '08:00', '16:00',
           '00:00', '08:00', '16:00',
           '00:00', '08:00', '16:00', '00:00']
 
+
+##############################################################
+# concatenate several househoulds that are the one after the other chronologically in one household
+
+
+# # Read the CSV file
+# filepath = 'target/2/HERON2.csv'
+# df2 = pd.read_csv(filepath, sep=',')
+# print(df2.head(2))
+# print(df2.tail(2))
+# print(df2.shape)
+#
+# # Read the CSV file
+# filepath = 'target/3/HERON3.csv'
+# df3 = pd.read_csv(filepath, sep=',')
+# print(df3.head(2))
+# print(df3.tail(2))
+# print(df3.shape)
+#
+# # Read the CSV file
+# filepath = 'target/4/HERON4.csv'
+# df4 = pd.read_csv(filepath, sep=',')
+# print(df4.head(2))
+# print(df4.tail(2))
+# print(df4.shape)
+#
+# # Read the CSV file
+# filepath = 'target/5/HERON5.csv'
+# df5 = pd.read_csv(filepath, sep=',')
+# print(df5.head(2))
+# print(df5.tail(2))
+# print(df5.shape)
+#
+# # Read the CSV file
+# filepath = 'target/6/HERON6.csv'
+# df6 = pd.read_csv(filepath, sep=',')
+# print(df6.head(2))
+# print(df6.tail(2))
+# print(df6.shape)
+#
+# filepath = 'target/7/HERON7.csv'
+# df7 = pd.read_csv(filepath, sep=',')
+# print(df7.head(2))
+# print(df7.tail(2))
+# print(df7.shape)
+#
+# # List of file paths
+# filepaths = [
+#     'target/2/HERON2.csv',
+#     'target/3/HERON3.csv',
+#     'target/4/HERON4.csv',
+#     'target/5/HERON5.csv',
+#     'target/6/HERON6.csv',
+#     'target/7/HERON7.csv'
+# ]
+#
+# # Create an empty list to store dataframes
+# dfs = []
+#
+# # Read each CSV file and store the dataframes in the list
+# for filepath in filepaths:
+#     df = pd.read_csv(filepath, sep=',')
+#     dfs.append(df)
+#
+# # Concatenate the dataframes
+# merged_df = pd.concat(dfs, ignore_index=True)
+#
+# print(merged_df.head(2))
+# print(merged_df.tail(2))
+# print(merged_df.shape)
+# print(f"Total Columns: {len(merged_df.columns)}")
+# # csv export
+# merged_df.to_csv(f'target/1/HERON1.csv', index=False)
+
+
+############################################################
+
+
 # Read the CSV file
-filepath = 'target/1/HERON1.csv'
+filepath = 'target/2/HERON2.csv'
 df = pd.read_csv(filepath, sep=',')
+print(df.head(2))
+print(df.tail(2))
+print(df.shape)
 
 # Calculate the sum of the 'main' column
 main_column_sum = df['mains'].sum()
@@ -56,12 +137,12 @@ plt.figure(figsize=(12, 6))
 # Plot the mains data
 df.iloc[:, 1].plot(label="mains")
 
-# # Plot the other devices of interest
-# device_columns = [2, 3, 4, 5, 6, 7, 10]
-# device_labels = ["wm", "dw", "ac", "dryer", "fridge", "iron", "router"]
+# Plot the other devices of interest
+device_columns = [2, 3, 4, 5, 6, 7, 10]
+device_labels = ["wm", "dw", "ac", "dryer", "fridge", "iron", "router"]
 
-# for i, col in enumerate(device_columns):
-#     df.iloc[:, col].plot(label=device_labels[i])
+for i, col in enumerate(device_columns):
+    df.iloc[:, col].plot(label=device_labels[i])
 
 # Set x-ticks for each hour of the day
 num_hours = 24

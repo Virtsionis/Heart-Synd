@@ -1,4 +1,4 @@
 {"appliances":["ac", "coffee machine", "dw", "dryer", "fan", "fridge", "gaming PC",
   "hair dryer", "heater", "hot air gun", "iron", "lamp", "laptop", "microwave", "minioven",
   "monitor", "printer", "radio", "router", "toaster", "TV", "watercooker", "wm"],
-  "nr_days":731, "sampling_interval":1 , "add_noise:": true, "output_format":  "CSV", "ID":1, "SEED":1}
+  "nr_days":365, "sampling_interval":1 , "add_noise:": true, "output_format":  "CSV", "ID":7, "SEED":2}

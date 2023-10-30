@@ -14,7 +14,7 @@ date_format = "%m-%d-%Y"
 today = date.today()
 d3 = today.strftime(date_format)
 
-a = datetime.strptime('07-04-2022', date_format)
+a = datetime.strptime('07-05-2023', date_format)
 b = datetime.strptime(d3, date_format)
 delta = b - a
 # print(delta.days)
@@ -480,18 +480,29 @@ else:
                       f"{appliances[17]}", f"{appliances[18]}", f"{appliances[19]}", f"{appliances[20]}",
                       f"{appliances[21]}", f"{appliances[22]}"]
 
-    # timestamp convertion
-    timestamps = HERON1['Datetime'].tolist()
-    # str to datetime oneliner
-    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
-                                   timestamps]
-    HERON1['Datetime'] = list_of_converted_datetimes
+    # # timestamp convertion
+    # timestamps = HERON1['Datetime'].tolist()
+    # # str to datetime oneliner
+    # list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+    #                                timestamps]
+    # HERON1['Datetime'] = list_of_converted_datetimes
     # # upsamping
     HERON1['Datetime'] = pd.to_datetime(HERON1['Datetime'])
     HERON1.iloc[:, 1:] = HERON1.iloc[:, 1:].div(1000 * 3600)
     HERON1.set_index('Datetime', inplace=True)
     hourly_df = HERON1.resample('1H').sum()
+
+    # timestamp conversion
     hourly_df.reset_index(inplace=True)
+    timestamps = hourly_df['Datetime'].tolist()
+    # Convert Timestamp to string with the desired format
+    timestamps_as_strings = [t.strftime('%Y-%m-%d %H:%M:%S') for t in timestamps]
+    # Use the converted strings with strptime
+    list_of_converted_datetimes = [datetime.strptime(t, '%Y-%m-%d %H:%M:%S') - relativedelta(days=delta.days) for t in
+                                   timestamps_as_strings]
+    hourly_df['Datetime'] = list_of_converted_datetimes
+
+    # csv export
     hourly_df.to_csv(f'target/{ID}/HERON{ID}.csv', index=False)
 
 
