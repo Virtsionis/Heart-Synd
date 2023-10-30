@@ -14,7 +14,7 @@ date_format = "%m-%d-%Y"
 today = date.today()
 d3 = today.strftime(date_format)
 
-a = datetime.strptime('07-05-2023', date_format)
+a = datetime.strptime('07-04-2021', date_format)
 b = datetime.strptime(d3, date_format)
 delta = b - a
 # print(delta.days)
